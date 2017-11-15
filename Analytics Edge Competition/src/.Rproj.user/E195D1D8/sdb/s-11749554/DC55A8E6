@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "library(leaps)\n?regsubsets\ntrain <- train[,c(1:83,95:99,110:154)]\nwhich(colnames(train)==\"age1\")\nS <- mlogit.data(train,shape=\"wide\",choice=\"Choice\",sep=\"\",varying=c(4:83,89:132),alt.levels=c(\"Ch1\",\"Ch2\",\"Ch3\",\"Ch4\"),id.var=\"Case\")\nS$cate\nsummary(S)\nsummary(train)\nS$cate <- as.numeric(S$cate==TRUE)\nwhich (colnames(S)==\"CC\")\nwhich (colnames(S)==\"Price\")\nmodel1 <- regsubsets(cate~.-Case-No-Task-chid-alt, data=S,nvmax = 30,method = \"forward\")\nmodel2 <- regsubsets(cate~age+gender+educ+distance+night+region+Urb+ppark+money+year+car,data=train,nvmax = 10,method = \"forward\")\nsummary(model1)\nwhich.min((summary(model2))$bic)\nwhich.min((summary(model1))$bic)\ncoef(model1,25)\n\nlibrary(rpart)\nlibrary(rpart.plot)\nset.seed(8)\nmodel3 <-rpart(cate~.-Case-No-Task-chid-alt-Ch1-Ch2-Ch3-Ch4-Choice,data=S)\nprp(model3)\nprp(model3,type=4,extra=2)\npredict1 <-predict(model3,newdata = S, type=\"class\")\npredict1\ntable(predict1, S$cate)\n\n\n###### Random Forest ###########\nS$cate\nlibrary(\"randomForest\")\nset.seed(8)\nrf <- randomForest(Choice~CC+GN+NS+BU+FA+LD+BZ+FC+FP+RP+PP+KA+SC+TS+NV+MA+LB+AF+HU+Price+age+gender+educ+distance+night+money+region+Urb+ppark+year+car,data = S, nodesize = 50, ntree = 100)\nsummary(S)\n?randomForest\nsummary(rf)\n?predict\nPrediction <- predict(rf, newdata = S)\nPrediction\nPrediction <-as.double(Prediction)\nPredRf <- matrix(Prediction,nrow=4, ncol=14250)\nPredRf <-t(PredRf)\ncolnames(PredRf) <- c(\"Ch1\", \"Ch2\", \"Ch3\",\"Ch4\")\n\n###### Cart ########\n\nlibrary(rpart)\nlibrary(rpart.plot)\ncart1 <- rpart(as.factor(cate)~GN+NS+BU+FA+LD+BZ+FC+FP+RP+PP+KA+SC+TS+NV+MA+LB+AF+HU+Price+age+gender+educ+distance+night+money+region+Urb+ppark,data=S) #fast : X mostly are binary\nsummary(cart1)\ncart1\nprp(cart1) #same var occur at may points on the tree\nprp(cart1, type = 1) #label all nodes\nprp(cart1, type = 4,extra=4) \npredictcart1 <- predict(cart1, newdata=S, type='class')\npredictcart1\n# testIndexes <- which(folds==3,arr.ind=TRUE)\n# testData <- S[testIndexes, ]\n# trainData <- S[-testIndexes, ]\n# set.seed(8)\n# rf <- randomForest(Choice~GN+NS+BU+FA+LD+BZ+FC+FP+RP+PP+KA+SC+TS+NV+MA+LB+AF+HU+Price+age+gender+educ+distance+night+money+region+Urb+ppark,data = trainData, nodesize = 50, ntree = 100)\n# summary(rf)\n# Prediction <- predict(rf, newdata = testData, type=\"class\")\n# Prediction <-as.double(Prediction)\n# PredRf <- matrix(Prediction,nrow=4, ncol=nrow(testData)/4)\n# PredRf <-t(PredRf)\n# colnames(PredRf) <- c(\"Ch1\", \"Ch2\", \"Ch3\",\"Ch4\")\n# ActualChoice <- subset(testData, testData$Choice==TRUE)[,c(\"Ch1\",\"Ch2\",\"Ch3\",\"Ch4\")]\n# ActualChoice <-as.matrix(ActualChoice)\n# (-1*mean(log(PredRf[model.matrix(~ ActualChoice + 0) - PredRf > 0])))\n\n\nfolds <- cut(seq(1,nrow(S)),breaks=10,labels=FALSE)\ntot <-0\nfor(k in 1:10){\n  #Segement your data by fold using the which() function\n  testIndexes <- which(folds==k,arr.ind=TRUE)\n  testData <- S[testIndexes, ]\n  trainData <- S[-testIndexes, ]\n  set.seed(8)\n  Mn<- mnlogit(Choice~GN+NS+BU+FA+LD+BZ+FC+FP+RP+PP+KA+SC+TS+NV+MA+LB+AF+HU+Price+age+gender+educ+money+region+Urb+ppark,data=S)\n  Prediction <- predict(Mn, newdata = testData)\n  # Prediction <-as.double(Prediction)\n  # PredRf <- matrix(Prediction,nrow=4, ncol=14250)\n  # PredRf <-t(PredRf)\n  # colnames(PredRf) <- c(\"Ch1\", \"Ch2\", \"Ch3\",\"Ch4\")\n  ActualChoice <- subset(testData, testData$Choice==TRUE)[,c(\"Ch1\",\"Ch2\",\"Ch3\",\"Ch4\")]\n  ActualChoice <-as.matrix(ActualChoice)\n  tot <- tot +(-1*mean(log(PredRf[model.matrix(~ ActualChoice + 0) - PredRf > 0])))\n  #Use the test and train data partitions however you desire...\n}\ntot/10\n\n",
+    "created" : 1502286924383.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "4131135255",
+    "id" : "DC55A8E6",
+    "lastKnownWriteTime" : 1502444594,
+    "last_content_update" : 1502444594153,
+    "path" : "~/Documents/SUTD Year 4/Analytics Edge/AEProject/FeatureSelection.R",
+    "project_path" : "FeatureSelection.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

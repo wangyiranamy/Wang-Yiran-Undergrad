@@ -1,0 +1,3 @@
+This the the course project of Machine Learning course.
+
+Instructions:1. Download “EN”, “ES”, “CN”, “SG” and “test” zip files and save them into a folder. Put the ml_project into the same folder. 2. At the beginning of the script ml_project, change the directory to the current folder. 3. After running the code, output files will be automatically generated into the folder and the F scores for different algorithms and languages will all be printed.

@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "train <- read.csv(\"train.csv\")\ntest <- read.csv(\"test.csv\")\n# train1$income <-factor(train1$income, levels = levels(test1$income))\n# levels(train1$income)\nmodel1 <- glm(Ch1~segment+money+year+miles+night+gender+age+educ+region+Urb+ppark, data = train, family = binomial)\npred1 <- predict(model1, newdata = train, type = \"response\")\npredtest1 <- predict(model1, newdata = test, type = \"response\")\nmodel2 <- glm(Ch2~segment+money+year+miles+night+gender+age+educ+region+Urb+ppark, data = train, family = binomial)\npred2<- predict(model2, newdata = train, type = \"response\")\npredtest2<- predict(model2, newdata = test, type = \"response\")\nmodel3 <- glm(Ch3~segment+money+year+miles+night+gender+age+educ+region+Urb+ppark, data = train, family = binomial)\npred3<- predict(model3, newdata = train, type = \"response\")\npredtest3<- predict(model3, newdata = test, type = \"response\")\nmodel4 <- glm(Ch4~segment+money+year+miles+night+gender+age+educ+region+Urb+ppark, data = train, family = binomial)\npred4<- predict(model4, newdata = train, type = \"response\")\npredtest4<- predict(model4, newdata = test, type = \"response\")\npred1 <- as.matrix(pred1)\npred2 <- as.matrix(pred2)\npred3 <- as.matrix(pred3)\npred4 <- as.matrix(pred4)\npredtest1 <- as.matrix(predtest1)\npredtest2 <- as.matrix(predtest2)\npredtest3 <- as.matrix(predtest3)\npredtest4 <- as.matrix(predtest4)\npred <- cbind(pred1, pred2)\npred <- cbind(pred, pred3)\npred <- cbind(pred, pred4)\npredtest <- cbind(predtest1, predtest2, predtest3, predtest4)\ncolnames(pred) <- c(\"pred1\",\"pred2\",\"pred3\",\"pred4\")\ncolnames(predtest) <- c(\"pred1\",\"pred2\",\"pred3\",\"pred4\")\nsummary(model1)\nmodel1 <- glm(Ch1~segment+miles+night+educ+region+Urb, data = train, family = binomial)\npred1 <- predict(model1, newdata = train, type = \"response\")\npredtest1 <- predict(model1, newdata = test, type = \"response\")\nmodel2 <- glm(Ch2~segment+miles+night+educ+region+Urb, data = train, family = binomial)\npred2<- predict(model2, newdata = train, type = \"response\")\npredtest2<- predict(model2, newdata = test, type = \"response\")\nmodel3 <- glm(Ch3~segment+miles+night+educ+region+Urb, data = train, family = binomial)\npred3<- predict(model3, newdata = train, type = \"response\")\npredtest3<- predict(model3, newdata = test, type = \"response\")\nmodel4 <- glm(Ch4~segment+miles+night+educ+region+Urb, data = train, family = binomial)\npred4<- predict(model4, newdata = train, type = \"response\")\npredtest4<- predict(model4, newdata = test, type = \"response\")\n",
+    "created" : 1502161044075.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "4009110463",
+    "id" : "9BB0822F",
+    "lastKnownWriteTime" : 1502550644,
+    "last_content_update" : 1502550644100,
+    "path" : "~/Documents/SUTD Year 4/Analytics Edge/AEProject/Glm_predict.R",
+    "project_path" : "Glm_predict.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 14,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

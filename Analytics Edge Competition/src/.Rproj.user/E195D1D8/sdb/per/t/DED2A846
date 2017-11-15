@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "#### multi-logit regression model ####\ntrain1 <- read.csv(\"train.csv\")\ntable(train$Choice)\ntest <- read.csv(\"test.csv\")\n#submit <- read.csv(\"samplesubmission.csv\")\nnewtrain2 <- read.csv(\"train.csv\")\nsummary(train)\nlibrary(\"mlogit\")\nS <- mlogit.data(train1,shape=\"wide\",choice=\"Choice\",sep=\"\",varying=c(4:83),alt.levels=c(\"Ch1\",\"Ch2\",\"Ch3\",\"Ch4\"),id.var=\"Case\")\nM <- mlogit(Choice~CC+GN+NS+BU+FA+LD+BZ+FC+FP+RP+PP+KA+SC+TS+NV+MA+LB+AF+HU+Price-1,data=S)\nsummary(M)\nsummary(S)\nActualChoice <- train[,\"Choice\"]\nP <- predict(M, newdata = S)\nP\nPredictedChoice <- apply(P, 1, which.max)\nPredictedChoice\ntable(PredictedChoice, ActualChoice)\nfor (i in 1:nrow(test)){\n  test$Ch1 <-0\n  test$Ch2 <-1\n  test$Ch3 <-0\n  test$Ch4 <-0\n  test$Choice <- \"Ch2\"}\nT <- mlogit.data(test,shape=\"wide\",choice=\"Choice\",sep=\"\",varying=c(4:83),alt.levels=c(\"Ch1\",\"Ch2\",\"Ch3\",\"Ch4\"),id.var=\"Case\")\nP2 <- predict(M, newdata = T)\nP2\nnrow(P2)\nnrow(test)\nsubmit$Ch1 <- P2[,1]\nsubmit$Ch2 <- P2[,2]\nsubmit$Ch3 <- P2[,3]\nsubmit$Ch4 <- P2[,4]\nwrite.csv(submit, \"samplesubmission2.csv\")\nS2 <- mlogit.data(newtrain2,shape=\"wide\",choice=\"Choice\",sep=\"\",varying=c(4:123),alt.levels=c(\"Ch1\",\"Ch2\",\"Ch3\",\"Ch4\"),id.var=\"Case\")\nM2 <- mlogit(Choice~CC+GN+NS+BU+FA+LD+BZ+FC+FP+RP+PP+KA+SC+TS+NV+MA+LB+AF+HU+Price+gend-1,data=S2)\nsummary(M2)\n\n\nPredictedChoice <- apply(P2, 1, which.max)\nM <- mlogit(Choice~CC+GN+NS+BU+FA+LD+BZ+FC+FP+RP+PP+KA+SC+TS+NV+MA+LB+AF+HU+Price-1,rpar=c(CC='n',GN='n',NS='n',BU='n',FA='n',LD='n',BZ='n',FC='n',FP='n',RP='n',PP='n',KA='n',SC='n',TS='n',NV='n',MA='n',LB='n',AF='n',HU='n',Price='n'),panel=TRUE,data=S)\nsummary(M)\nActualChoice <- subset(train, Task <= 12)[,\"Choice\"]\nP <- predict(M, newdata = S)\nPredictedChoice <- apply(P, 1, which.max)\ntable(PredictedChoice, ActualChoice)\n\nmodel1 <- glm(Ch1~segment+year+miles+night+gender+age+educ+region+Urb, data = train, family = binomial)\npred1 <- predict(model1, newdata = train, type = \"response\")\nmodel2 <- glm(Ch2~segment+year+miles+night+gender+age+educ+region+Urb, data = train, family = binomial)\npred2<- predict(model2, newdata = train, type = \"response\")\nmodel3 <- glm(Ch3~segment+year+miles+night+gender+age+educ+region+Urb, data = train, family = binomial)\npred3<- predict(model3, newdata = train, type = \"response\")\nmodel4 <- glm(Ch4~segment+year+miles+night+gender+age+educ+region+Urb, data = train, family = binomial)\npred4<- predict(model4, newdata = train, type = \"response\")\npred1 <- as.matrix(pred1)\npred2 <- as.matrix(pred2)\npred3 <- as.matrix(pred3)\npred4 <- as.matrix(pred4)\npred <- cbind(pred1, pred2)\npred <- cbind(pred, pred3)\npred <- cbind(pred, pred4)\ncolnames(pred) <- c(\"pred1\",\"pred2\",\"pred3\",\"pred4\")\npred <- matrix(nrow = nrow(train),ncol = 4,colnames <- c(\"Ch1\",\"Ch2\",\"Ch3\",\"Ch4\"))\npred[,1]<-pred1\npred[,2]<-pred2\npred[,3]<-pred3\npred[,4]<-pred4\npred <- as.numeric(pred)\npred\npred <-as.matrix(pred)\nPredictedChoice <- apply(pred, 1, which.max)\nPredictedChoice\nActualChoice\ntable(PredictedChoice, ActualChoice)\n",
+    "created" : 1510638437083.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "4147013214",
+    "id" : "DED2A846",
+    "lastKnownWriteTime" : 1510638488,
+    "last_content_update" : 1510638488359,
+    "path" : "~/Documents/SUTD Year 4/Analytics Edge/AEProject/Prediction_mogit_1.R",
+    "project_path" : "Prediction_mogit_1.R",
+    "properties" : {
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

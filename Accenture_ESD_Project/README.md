@@ -1,0 +1,1 @@
+This is a course project of Introduction to Energy System and Design (ESD), which is solving the industrial problem through collaboration with consulting company, Accenture.

@@ -1,0 +1,1 @@
+A course project of Energy Systems. The project models the algorithm on the Unit Commitment problems of the electricity network. I have received the 'Top Student' reward of Energy System course due to the outstanding performance on this project.
