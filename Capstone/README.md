@@ -1,3 +1,5 @@
-# Wang-Yiran-Undergrad
-Two-terms inter-curricular Capstone project in the final year. Our project is Electrical Actuator design which major in electrical product design. Being the only one from a different major, Engineering System and Design, I have self-learned a lot of electrical engineering and mechanism knowledge and support the whole project with strong mathematics and programming skills.
-In general, I am in charge of Calculation justification in R and excel, test experiment designs, motor control (PID) with code modification in C, sensor damping algorithms in R, project management and financial planning.
+Capstone project on Electrical Actuator Design collaborating with Rolls Royce company in the final year. It is the inter-curriculum project with integration of Engineering Product Design and Engineering System Design. 
+
+Being the only one from a different major (ESD), I have self-learned a lot of knowledge on electrical engineering and mechanism  and support the whole project with strong mathematics and programming skills.
+
+I supported the whole team with mathematics and programming skills in aspects of engine simulation, sensor damping control, test experiment design and formulating regression models of fail-safe system.
